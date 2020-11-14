@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 public class App {
     static final String cardDirectoryLinux = "./Card PNGs sequential/";
-    static final String cardDirectoryWindows = "\\Card PNgs sequential";
+    static final String cardDirectoryWindows = ".\\Card PNgs sequential\\";
     public static ArrayList<Card> cardSelection = new ArrayList<>();
     private final Client client = new Client();
     private final Server server = new Server();
@@ -165,22 +165,44 @@ public class App {
                     }
                 }
                 break;
-            case "Windows":
+            case "Windows 10":
 
-                directory = new File(cardDirectoryWindows);
-                filesList = directory.listFiles();
+               File windirectory = new File(cardDirectoryWindows);
+               File[] winfilesList = windirectory.listFiles();
 
 
                 //For loop that adds all images as an ImageIcon object in the cardSelection ArrayList
 
-                for (int i = 0; i < filesList.length; i++) {
+                for (int i = 0; i < winfilesList.length; i++) {
 
-                    if (filesList[i].isFile()) {
+                    if (winfilesList[i].isFile()) {
 
                         try {
 
-                            BufferedImage img = ImageIO.read(new File(cardDirectoryWindows + filesList[i].getName()));
-                            cardSelection.add(new Card(new ImageIcon(img), filesList[i].getName().substring(1)));
+                            BufferedImage img = ImageIO.read(new File(cardDirectoryWindows + winfilesList[i].getName()));
+                            cardSelection.add(new Card(new ImageIcon(img), winfilesList[i].getName().substring(1)));
+                            System.out.println("Card added: " + cardSelection.get(i).imageName);
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+                    }
+                }
+
+            case "Mac OS X":
+                File macdirectory = new File(cardDirectoryLinux);
+                File[] macfilesList = macdirectory.listFiles();
+
+
+                //For loop that adds all images as an ImageIcon object in the cardSelection ArrayList
+
+                for (int i = 0; i < macfilesList.length; i++) {
+
+                    if (macfilesList[i].isFile()) {
+
+                        try {
+
+                            BufferedImage img = ImageIO.read(new File(cardDirectoryLinux + macfilesList[i].getName()));
+                            cardSelection.add(new Card(new ImageIcon(img), macfilesList[i].getName().substring(1)));
                             System.out.println("Card added: " + cardSelection.get(i).imageName);
                         } catch (IOException ioException) {
                             ioException.printStackTrace();
