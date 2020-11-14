@@ -1,5 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -11,7 +12,8 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 public class App {
-    static final String cardDirectory = "Card PNGs sequential\\";
+    static final String cardDirectoryLinux = "./Card PNGs sequential/";
+    static final String cardDirectoryWindows = "\\Card PNgs sequential";
     public static ArrayList<Card> cardSelection = new ArrayList<>();
     private final Client client = new Client();
     private final Server server = new Server();
@@ -27,6 +29,7 @@ public class App {
     private JButton joinServerButton;
     private JPanel singleplayerPanel;
     private JLabel jLabel;
+    private static String osName = System.getProperty("os.name");
 
     public App() {
 
@@ -138,33 +141,55 @@ public class App {
     public static void main(String[] args) throws IOException {
 
 
-        File directory = new File(cardDirectory);
-        File[] filesList = directory.listFiles();
+        switch (osName) {
 
-        System.out.println(filesList);
+            case "Linux":
+                File directory = new File(cardDirectoryLinux);
+                File[] filesList = directory.listFiles();
 
 
+                //For loop that adds all images as an ImageIcon object in the cardSelection ArrayList
 
+                for (int i = 0; i < filesList.length; i++) {
 
-        //For loop that adds all images as an ImageIcon object in the cardSelection ArrayList
-        for (int i = 0; i < filesList.length; i++) {
+                    if (filesList[i].isFile()) {
 
-            if (filesList[i].isFile()) {
+                        try {
 
-                try {
-
-                    BufferedImage img = ImageIO.read(new File(cardDirectory + filesList[i].getName()));
-                    cardSelection.add(new Card(new ImageIcon(img), filesList[i].getName().substring(1)));
-                    System.out.println("Card added: " + cardSelection.get(i).imageName);
-                } catch (IOException ioException) {
-                    ioException.printStackTrace();
+                            BufferedImage img = ImageIO.read(new File(cardDirectoryLinux + filesList[i].getName()));
+                            cardSelection.add(new Card(new ImageIcon(img), filesList[i].getName().substring(1)));
+                            System.out.println("Card added: " + cardSelection.get(i).imageName);
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+                    }
                 }
-            }
+                break;
+            case "Windows":
 
+                directory = new File(cardDirectoryWindows);
+                filesList = directory.listFiles();
+
+
+                //For loop that adds all images as an ImageIcon object in the cardSelection ArrayList
+
+                for (int i = 0; i < filesList.length; i++) {
+
+                    if (filesList[i].isFile()) {
+
+                        try {
+
+                            BufferedImage img = ImageIO.read(new File(cardDirectoryWindows + filesList[i].getName()));
+                            cardSelection.add(new Card(new ImageIcon(img), filesList[i].getName().substring(1)));
+                            System.out.println("Card added: " + cardSelection.get(i).imageName);
+                        } catch (IOException ioException) {
+                            ioException.printStackTrace();
+                        }
+                    }
+                }
         }
 
         cardSelection.sort(new CardSorter());
-
 
         JFrame jframe = new JFrame("Blackjack");
 
