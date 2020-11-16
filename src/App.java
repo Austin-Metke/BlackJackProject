@@ -31,9 +31,9 @@ public class App {
     private JLabel jLabel;
     private static String osName = System.getProperty("os.name");
 
-    public App() {
+    public App() throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
 
-
+        UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         jLabel.setVisible(false);
         multiplayerPanel.setVisible(false);
         singleplayerPanel.setVisible(false);
@@ -138,7 +138,7 @@ public class App {
         });
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException {
 
 
         switch (osName) {
