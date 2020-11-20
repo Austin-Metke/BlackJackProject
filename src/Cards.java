@@ -1,16 +1,33 @@
 import javax.swing.*;
 
-class Card {
-
+public class Cards {
     ImageIcon imageIcon;
     String imageName;
     int value;
-
-    public Card(ImageIcon imageIcon, String imageName) {
-        this.imageName = imageName;
+    boolean ace;
+    public Cards(ImageIcon imageIcon, String imageName, int value) {
         this.imageIcon = imageIcon;
+        this.imageName = imageName;
         this.value = value;
     }
 
+    public Cards(ImageIcon imageIcon, String imageName, int value, boolean ace) {
+        this.imageIcon = imageIcon;
+        this.imageName = imageName;
+        this.value = value;
+        this.ace = ace;
+    }
 
+    public ImageIcon getImageIcon() {
+        return imageIcon;
+    }
+
+
+    public int getValue() {
+        return value;
+    }
+
+    public String getImageName() {
+        return imageName;
+    }
 }
