@@ -5,11 +5,11 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Main {
 
     public static ArrayList<Cards> cards = new ArrayList<>();
+    public static ArrayList<Cards> cardsShuffled = new ArrayList<>();
 
     public static void main(String[] args) {
 
@@ -29,18 +29,17 @@ public class Main {
         final String folder = "Card PNGs sequential\\";
         File directory = new File(folder);
         File[] filesList = directory.listFiles();
-        assert filesList != null;
-        Arrays.sort(filesList);
+
 
         //For loop that adds all images as an ImageIcon object in the cards ArrayList
-        for (int i = 0; i < 52; i++) {
+        for (int i = 0; i < filesList.length; i++) {
 
             if (filesList[i].isFile()) {
 
                 try {
 
                     BufferedImage img = ImageIO.read(new File(folder + filesList[i].getName()));
-                    cards.add(new Cards(new ImageIcon(img), filesList[i].getName().substring(1), i + 1));
+                    cards.add(new Cards(new ImageIcon(img), filesList[i].getName().substring(1))); //adds an imageicon and the filename without the '0' in it
 
                 } catch (IOException ioException) {
                     ioException.printStackTrace();
@@ -49,12 +48,31 @@ public class Main {
 
         }
 
+        //sort the cards ArrayList so I can add the values to the cards
+        cards.sort(new Cards.CardSorter());
 
 
-
-        for (Cards card : cards) {
-            System.out.println(card.getValue());
+        //Thanks Jaxon
+        for (int i = 0; i < cards.size(); i++) {
+            cards.get(i).value = (i % 13 + 1 < 10) ? i % 13 + 1 : 10;
         }
 
+        //Assign value of all aces to 11
+        for (int i = 0; i < cards.size(); i += 13) {
+
+            cards.get(i).value = 11;
+
+            System.out.println(cards.get(i).getImageName() + " " + cards.get(i).getValue());
+
+        }
+
+        cardsShuffled = new Cards().shuffle(cards);
+
+        for (int i = 0; i < cards.size(); i++) {
+            System.out.println("Name: " + cards.get(i).getImageName() + " Value: " + cards.get(i).getValue());
+        }
+
+
     }
+
 }

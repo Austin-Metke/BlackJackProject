@@ -20,7 +20,7 @@ public class GUI {
     JLabel mainMenuText = new JLabel();
     JLabel cardLeft = new JLabel();
     JLabel cardRight = new JLabel();
-
+    JFrame frame;
 
     GUI() throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, IOException, FontFormatException {
 
@@ -29,7 +29,7 @@ public class GUI {
         icons.add(new ImageIcon("16.png").getImage());
         icons.add(new ImageIcon("64.png").getImage());
 
-        JFrame frame = new JFrame("Blackjack");
+        frame = new JFrame("Blackjack");
         //Sets default theme to that of the host machines Operating System and the default close operation
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -67,9 +67,9 @@ public class GUI {
         settingsButton.setBackground(buttonColor);
         exitButton.setBackground(buttonColor);
         SecureRandom rand = new SecureRandom();
-        cardLeft.setIcon(Main.cards.get(rand.nextInt(52) + 1).imageIcon);
+      /*  cardLeft.setIcon(Main.cards.get(rand.nextInt(52) + 1).imageIcon);
         cardRight.setIcon(Main.cards.get(rand.nextInt(26) + 1).imageIcon);
-
+*/
         //set borders for buttons
         Border border = BorderFactory.createLineBorder(new Color(245, 215, 66), 4);
         multiplayerButton.setBorder(border);
@@ -131,6 +131,9 @@ public class GUI {
         settingsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+
+                new Options();
+
 
             }
         });
