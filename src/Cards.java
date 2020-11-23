@@ -6,7 +6,7 @@ public class Cards {
     ImageIcon imageIcon;
     String imageName;
     int value;
-    boolean visible;
+    boolean visible = false;
 
     public Cards(ImageIcon imageIcon, String imageName) {
         this.imageIcon = imageIcon;

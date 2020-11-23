@@ -21,6 +21,7 @@ public class GUI {
     JLabel cardLeft = new JLabel();
     JLabel cardRight = new JLabel();
     JFrame frame;
+    JLabel jackblack = new JLabel();
 
     GUI() throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, IOException, FontFormatException {
 
@@ -44,7 +45,7 @@ public class GUI {
         mainMenuText.setBounds(375, 50, 216, 60);
         cardLeft.setBounds(88, 50, 72, 96);
         cardRight.setBounds(764, 50, 72, 96);
-
+        jackblack.setBounds(225, 350, 500, 214);
 
         //Sets layout to null and sets the Contentpane to the main panel
         panel.setLayout(null);
@@ -58,6 +59,7 @@ public class GUI {
         panel.add(mainMenuText);
         panel.add(cardLeft);
         panel.add(cardRight);
+        panel.add(jackblack);
 
         //Set color of everything
         Color buttonColor = new Color(245, 233, 66);
@@ -67,9 +69,14 @@ public class GUI {
         settingsButton.setBackground(buttonColor);
         exitButton.setBackground(buttonColor);
         SecureRandom rand = new SecureRandom();
-      /*  cardLeft.setIcon(Main.cards.get(rand.nextInt(52) + 1).imageIcon);
-        cardRight.setIcon(Main.cards.get(rand.nextInt(26) + 1).imageIcon);
-*/
+        cardLeft.setIcon(Main.cardsShuffled.get(rand.nextInt(52) + 1).imageIcon);
+        cardRight.setIcon(Main.cardsShuffled.get(rand.nextInt(52) + 1).imageIcon);
+
+        if(cardLeft.getIcon() == cardRight.getIcon()) {
+            jackblack.setIcon(new ImageIcon(".\\JacKBlackEasterEgg.jpg"));
+            jackblack.setVisible(true);
+        }
+
         //set borders for buttons
         Border border = BorderFactory.createLineBorder(new Color(245, 215, 66), 4);
         multiplayerButton.setBorder(border);
