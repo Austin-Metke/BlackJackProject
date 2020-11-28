@@ -57,19 +57,14 @@ public class Main {
             cards.get(i).value = (i % 13 + 1 < 10) ? i % 13 + 1 : 10;
         }
 
-        //On the backburner while I figure out if assigning aces to 1 or 11 would be best
-        //Assign value of all aces to 11
-/*        for (int i = 0; i < cards.size(); i += 13) {
-
-            cards.get(i).value = 11;
-
-        }*/
-
         cardsShuffled = new Cards().shuffle(cards);
 
 
+        Dealer dealer = new Dealer();
         Player player = new Player();
         player.generateHand();
+        dealer.generateHand();
+
 
     }
 

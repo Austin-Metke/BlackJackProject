@@ -1,3 +1,4 @@
+//TODO literally everything
 public class Client {
     String ipaddr;
     int port;

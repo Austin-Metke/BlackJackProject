@@ -11,8 +11,11 @@ import java.util.List;
 
 public class GUI {
 
-    JPanel panel = new JPanel(new BorderLayout());
-    JPanel singlePlayerPanel = new JPanel();
+    static JPanel panel = new JPanel(new BorderLayout());
+    static JPanel optionsPanel = new JPanel();
+    static JFrame frame;
+    static JPanel singlePlayerPanel = new JPanel();
+    static JPanel multiplayerPanel = new JPanel();
     JButton settingsButton = new JButton();
     JButton singleplayerButton = new JButton();
     JButton multiplayerButton = new JButton();
@@ -20,7 +23,6 @@ public class GUI {
     JLabel mainMenuText = new JLabel();
     JLabel cardLeft = new JLabel();
     JLabel cardRight = new JLabel();
-    JFrame frame;
     JLabel jackblack = new JLabel();
 
     GUI() throws ClassNotFoundException, UnsupportedLookAndFeelException, InstantiationException, IllegalAccessException, IOException, FontFormatException {
@@ -69,10 +71,13 @@ public class GUI {
         settingsButton.setBackground(buttonColor);
         exitButton.setBackground(buttonColor);
         SecureRandom rand = new SecureRandom();
-        cardLeft.setIcon(Main.cardsShuffled.get(rand.nextInt(52) + 1).imageIcon);
-        cardRight.setIcon(Main.cardsShuffled.get(rand.nextInt(52) + 1).imageIcon);
+        cardLeft.setIcon(Main.cardsShuffled.get(rand.nextInt(52)).imageIcon);
+        cardRight.setIcon(Main.cardsShuffled.get(rand.nextInt(52)).imageIcon);
 
-        if(cardLeft.getIcon() == cardRight.getIcon()) {
+
+
+        //If the two cards on the Main Menu are the same card, it displays a picture Jack Black
+        if (cardLeft.getIcon() == cardRight.getIcon()) {
             jackblack.setIcon(new ImageIcon(".\\JacKBlackEasterEgg.jpg"));
             jackblack.setVisible(true);
         }
@@ -121,6 +126,11 @@ public class GUI {
                 singlePlayerPanel.setVisible(true);
                 singlePlayerPanel.setBackground(Color.GREEN.darker());
                 frame.setContentPane(singlePlayerPanel);
+                try {
+                    SinglePlayerGUI.SinglePlayerGUI();
+                } catch (IOException ioException) {
+                    ioException.printStackTrace();
+                }
 
 
             }
@@ -130,6 +140,14 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                panel.setVisible(false);
+                multiplayerPanel.setLayout(null);
+                multiplayerPanel.setVisible(true);
+                multiplayerPanel.setBackground(Color.GREEN.darker());
+                frame.setContentPane(multiplayerPanel);
+
+
+
 
             }
         });
@@ -138,9 +156,14 @@ public class GUI {
         settingsButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                panel.setVisible(false);
+                optionsPanel.setLayout(null);
+                optionsPanel.setVisible(true);
+                optionsPanel.setBackground(Color.GREEN.darker());
+                frame.setContentPane(optionsPanel);
 
-                new Options();
 
+                Options.optionsGUI();
 
             }
         });
