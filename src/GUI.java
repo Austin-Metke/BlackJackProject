@@ -75,7 +75,6 @@ public class GUI {
         cardRight.setIcon(Main.cardsShuffled.get(rand.nextInt(52)).imageIcon);
 
 
-
         //If the two cards on the Main Menu are the same card, it displays a picture Jack Black
         if (cardLeft.getIcon() == cardRight.getIcon()) {
             jackblack.setIcon(new ImageIcon(".\\JacKBlackEasterEgg.jpg"));
@@ -121,17 +120,13 @@ public class GUI {
         singleplayerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                panel.setVisible(false);
-                singlePlayerPanel.setLayout(null);
-                singlePlayerPanel.setVisible(true);
-                singlePlayerPanel.setBackground(Color.GREEN.darker());
-                frame.setContentPane(singlePlayerPanel);
+
+
                 try {
-                    SinglePlayerGUI.SinglePlayerGUI();
-                } catch (IOException ioException) {
+                    new SinglePlayerGUI().SinglePlayerGUI();
+                } catch (IOException | FontFormatException ioException) {
                     ioException.printStackTrace();
                 }
-
 
             }
         });
@@ -147,8 +142,6 @@ public class GUI {
                 frame.setContentPane(multiplayerPanel);
 
 
-
-
             }
         });
 
@@ -161,7 +154,6 @@ public class GUI {
                 optionsPanel.setVisible(true);
                 optionsPanel.setBackground(Color.GREEN.darker());
                 frame.setContentPane(optionsPanel);
-
 
                 Options.optionsGUI();
 

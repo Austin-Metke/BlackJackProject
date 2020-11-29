@@ -4,14 +4,6 @@ public class Dealer {
 
     static ArrayList<Cards> dealerHand = new ArrayList<>();
 
-    void generateHand() {
-
-        dealerHand.add(Main.cardsShuffled.get(2));
-        dealerHand.add(Main.cardsShuffled.get(3));
-        dealerHand.get(0).visible = true;
-        dealerHand.get(1).visible = false;
-    }
-
     public static int getDealerHandValue() {
 
         int handValue = 0;
@@ -28,18 +20,21 @@ public class Dealer {
 
             }
 
-
         }
-
+        System.out.println("Dealer hand value: " + handValue);
         return handValue;
     }
 
-
-
-
-
     public static ArrayList<Cards> getDealerHand() {
         return dealerHand;
+    }
+
+    void generateHand() {
+        dealerHand.clear();
+        dealerHand.add(Main.cardsShuffled.get(2));
+        dealerHand.add(Main.cardsShuffled.get(3));
+        dealerHand.get(0).visible = true;
+        dealerHand.get(1).visible = false;
     }
 
 }

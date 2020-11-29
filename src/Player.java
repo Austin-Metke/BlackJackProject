@@ -5,6 +5,7 @@ public class Player {
 
     static JButton button = new JButton();
     static ArrayList<Cards> playerHand = new ArrayList<>();
+    static int chipCounter;
 
     public static ArrayList<Cards> getPlayerHand() {
         return playerHand;
@@ -19,6 +20,7 @@ public class Player {
             int g = playerHand.get(i).value;
 
             handValue += g;
+
             //Determines best hand when an ace is present
             if (playerHand.get(i).getValue() == 1) { //all aces are a value of 1
 
@@ -27,13 +29,15 @@ public class Player {
             }
 
 
+
+
         }
 
         return handValue;
     }
 
     void generateHand() {
-
+        playerHand.clear();
         playerHand.add(Main.cardsShuffled.get(0));
         playerHand.add(Main.cardsShuffled.get(1));
 
