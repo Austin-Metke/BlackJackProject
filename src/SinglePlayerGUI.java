@@ -1,3 +1,4 @@
+//TODO Make it not stupid
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -11,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class SinglePlayerGUI {
-
 
     JButton hitButton = new JButton();
     JButton standButton = new JButton();
@@ -181,6 +181,8 @@ public class SinglePlayerGUI {
                         Dealer.getDealerHand().add(Main.cardsShuffled.get(index));
                         dealerCards.get(x).setIcon(Main.cardsShuffled.get(index).imageIcon);
                         x++;
+
+
                         continue;
                     }
                     break;
@@ -191,6 +193,11 @@ public class SinglePlayerGUI {
                     winText.setText("It's a tie!");
                     System.out.println("It's a tie!");
                     Player.chipCounter = chipCounter + bet;
+                    hitButton.setVisible(false);
+                    standButton.setVisible(false);
+                    playAgain.setVisible(true);
+                    playAgainNo.setVisible(true);
+                    playAgainYes.setVisible(true);
 
                 } else if (Player.getPlayerHandValue() > Dealer.getDealerHandValue() && Player.getPlayerHandValue() <= 21 || Dealer.getDealerHandValue() > 21) {
 
@@ -198,6 +205,11 @@ public class SinglePlayerGUI {
                     winText.setForeground(new Color(245, 233, 66));
                     winText.setText("You won!");
                     Player.chipCounter = chipCounter + bet * 2;
+                    playAgain.setVisible(true);
+                    playAgainNo.setVisible(true);
+                    playAgainYes.setVisible(true);
+                    hitButton.setVisible(false);
+                    standButton.setVisible(false);
 
                 } else if (Player.getPlayerHandValue() < Dealer.getDealerHandValue() || Player.getPlayerHandValue() > 21) {
 
@@ -211,6 +223,7 @@ public class SinglePlayerGUI {
                         okButton.setVisible(true);
                         hitButton.setVisible(false);
                         standButton.setVisible(false);
+
                         Player.chipCounter = 100;
                     } else {
 
@@ -222,12 +235,6 @@ public class SinglePlayerGUI {
                     }
 
                 }
-                standButton.setVisible(false);
-                hitButton.setVisible(false);
-                playAgainNo.setVisible(true);
-                playAgainYes.setVisible(true);
-                playAgain.setVisible(true);
-
             }
 
 
@@ -252,6 +259,12 @@ public class SinglePlayerGUI {
                     winText.setForeground(new Color(245, 233, 66));
                     winText.setText("You won!");
                     Player.chipCounter = chipCounter + bet * 2;
+
+                    hitButton.setVisible(false);
+                    standButton.setVisible(false);
+                    playAgain.setVisible(true);
+                    playAgainNo.setVisible(true);
+                    playAgainYes.setVisible(true);
                 }
 
                 if (Player.getPlayerHandValue() > 21) {

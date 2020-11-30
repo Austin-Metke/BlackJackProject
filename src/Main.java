@@ -1,6 +1,8 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -57,7 +59,9 @@ public class Main {
             cards.get(i).value = (i % 13 + 1 < 10) ? i % 13 + 1 : 10;
         }
 
+        //Shuffle the cards
         cardsShuffled = new Cards().shuffle(cards);
+
 
     }
 
