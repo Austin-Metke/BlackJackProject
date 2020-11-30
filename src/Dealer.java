@@ -21,7 +21,6 @@ public class Dealer {
             }
 
         }
-        System.out.println("Dealer hand value: " + handValue);
         return handValue;
     }
 

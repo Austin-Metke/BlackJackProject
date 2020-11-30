@@ -59,13 +59,6 @@ public class Main {
 
         cardsShuffled = new Cards().shuffle(cards);
 
-
-        Dealer dealer = new Dealer();
-        Player player = new Player();
-        player.generateHand();
-        dealer.generateHand();
-
-
     }
 
 }

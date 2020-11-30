@@ -3,9 +3,8 @@ import java.util.ArrayList;
 
 public class Player {
 
-    static JButton button = new JButton();
     static ArrayList<Cards> playerHand = new ArrayList<>();
-    static int chipCounter;
+     static int chipCounter = 100;
 
     public static ArrayList<Cards> getPlayerHand() {
         return playerHand;
@@ -27,8 +26,6 @@ public class Player {
                 handValue = (handValue <= 21 - 10) ? handValue + 10 : handValue;
 
             }
-
-
 
 
         }
