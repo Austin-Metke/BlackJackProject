@@ -29,9 +29,8 @@ public class SinglePlayerGUI {
     JButton okButton = new JButton();
     JTextField betInput = new JTextField();
     int bet;
-    int i = 2;
-    int x = 2;
-    int chipCounter = Player.chipCounter;
+    int playerhandCounter = 2;
+    int dealerhandCounter = 2;
 
     public void SinglePlayerGUI() throws IOException, FontFormatException {
 
@@ -44,9 +43,16 @@ public class SinglePlayerGUI {
         GUI.panel.setVisible(false);
         GUI.singlePlayerPanel.setLayout(null);
         GUI.singlePlayerPanel.setVisible(true);
-        GUI.singlePlayerPanel.setBackground(Color.GREEN.darker());
-        GUI.frame.setContentPane(GUI.singlePlayerPanel);
 
+        //Set color of everything
+        playAgainNo.setBackground(GUI.buttonColor);
+        playAgainYes.setBackground(GUI.buttonColor);
+        hitButton.setBackground(GUI.buttonColor);
+        standButton.setBackground(GUI.buttonColor);
+        confirmBet.setBackground(GUI.buttonColor);
+        GUI.singlePlayerPanel.setBackground(Color.GREEN.darker());
+
+        GUI.frame.setContentPane(GUI.singlePlayerPanel);
         for (int i = 0; i < 5; i++) {
 
             playerCards.add(new JLabel());
@@ -60,10 +66,6 @@ public class SinglePlayerGUI {
         okButton.setVisible(false);
         hitButton.setVisible(false);
         standButton.setVisible(false);
-        playerCards.get(0).setVisible(false);
-        playerCards.get(1).setVisible(false);
-        dealerCards.get(0).setVisible(false);
-        dealerCards.get(1).setVisible(false);
 
 
         //Seems to be the only way to set a font size with custom fonts
@@ -79,22 +81,6 @@ public class SinglePlayerGUI {
         betInput.setFont(chipFont);
         betText.setFont(chipFont);
         okButton.setFont(buttonFont);
-
-        //Set color of all buttons
-        Color buttonColor = new Color(245, 233, 66);
-        playAgainNo.setBackground(buttonColor);
-        playAgainYes.setBackground(buttonColor);
-        hitButton.setBackground(buttonColor);
-        standButton.setBackground(buttonColor);
-        confirmBet.setBackground(buttonColor);
-
-        //set borders of all buttons
-        Border border = BorderFactory.createLineBorder(new Color(245, 215, 66), 4);
-        playAgainNo.setBorder(border);
-        playAgainYes.setBorder(border);
-        hitButton.setBorder(border);
-        standButton.setBorder(border);
-
 
         //Set bounds of all JLabels and JButtons
         hitButton.setBounds(380, 350, 87, 20);
@@ -119,6 +105,7 @@ public class SinglePlayerGUI {
         confirmBet.setBounds(125, 400, 143, 25);
         okButton.setBounds(335, 350, 250, 40);
 
+
         //set Icons for player hand
         playerCards.get(0).setIcon(Player.getPlayerHand().get(0).imageIcon);
         playerCards.get(1).setIcon(Player.getPlayerHand().get(1).imageIcon);
@@ -142,6 +129,15 @@ public class SinglePlayerGUI {
         GUI.singlePlayerPanel.add(confirmBet);
         GUI.singlePlayerPanel.add(okButton);
 
+        //set borders of all buttons
+        Border border = BorderFactory.createLineBorder(new Color(245, 215, 66), 4);
+        playAgainNo.setBorder(border);
+        playAgainYes.setBorder(border);
+        hitButton.setBorder(border);
+        standButton.setBorder(border);
+        confirmBet.setBorder(border);
+
+
         //For loop to add all playerCards to panel
         for (int i = 0; i < playerCards.size(); i++) {
             GUI.singlePlayerPanel.add(playerCards.get(i));
@@ -162,7 +158,7 @@ public class SinglePlayerGUI {
         confirmBet.setText("Confirm Bet");
         okButton.setText("Return to menu");
 
-        chipLabel.setText(String.valueOf(chipCounter));
+        chipLabel.setText(String.valueOf(Player.chipCounter));
 
         if (!Dealer.getDealerHand().get(1).visible) {
 
@@ -187,9 +183,8 @@ public class SinglePlayerGUI {
                 while (true) {
                     if (Dealer.getDealerHandValue() < 17) {
                         Dealer.getDealerHand().add(Main.cardsShuffled.get(index));
-                        dealerCards.get(x).setIcon(Main.cardsShuffled.get(index).imageIcon);
-                        x++;
-
+                        dealerCards.get(dealerhandCounter).setIcon(Main.cardsShuffled.get(index).imageIcon);
+                        dealerhandCounter++;
 
                         continue;
                     }
@@ -200,7 +195,7 @@ public class SinglePlayerGUI {
 
                     winText.setText("It's a tie!");
                     System.out.println("It's a tie!");
-                    Player.chipCounter = chipCounter + bet;
+                    Player.chipCounter =+ bet;
                     hitButton.setVisible(false);
                     standButton.setVisible(false);
                     playAgain.setVisible(true);
@@ -212,7 +207,7 @@ public class SinglePlayerGUI {
                     System.out.println("You won");
                     winText.setForeground(new Color(245, 233, 66));
                     winText.setText("You won!");
-                    Player.chipCounter = chipCounter + bet * 2;
+                    Player.chipCounter =+bet * 2;
                     playAgain.setVisible(true);
                     playAgainNo.setVisible(true);
                     playAgainYes.setVisible(true);
@@ -224,15 +219,15 @@ public class SinglePlayerGUI {
                     System.out.println("You lost");
                     winText.setForeground(new Color(245, 233, 66));
                     winText.setText("You lose!");
+                    Player.chipCounter =+ - bet;
 
-                    if (chipCounter == 0) {
+                    if (Player.chipCounter == 0) {
 
                         winText.setText("You ran out of chips!");
                         okButton.setVisible(true);
                         hitButton.setVisible(false);
                         standButton.setVisible(false);
 
-                        Player.chipCounter = 100;
                     } else {
 
                         standButton.setVisible(false);
@@ -257,16 +252,16 @@ public class SinglePlayerGUI {
 
                 Player.getPlayerHand().add(Main.cardsShuffled.get(index));
 
-                playerCards.get(i).setIcon(Main.cardsShuffled.get(index).imageIcon);
+                playerCards.get(playerhandCounter).setIcon(Main.cardsShuffled.get(index).imageIcon);
 
 
                 System.out.println(Player.getPlayerHandValue());
 
-                if (Player.getPlayerHand().size() == 5) {
+                if (Player.getPlayerHand().size() == 5 && Player.getPlayerHandValue() <= 21) {
 
                     winText.setForeground(new Color(245, 233, 66));
                     winText.setText("You won!");
-                    Player.chipCounter = chipCounter + bet * 2;
+                    Player.chipCounter =+ bet * 2;
 
                     hitButton.setVisible(false);
                     standButton.setVisible(false);
@@ -280,14 +275,14 @@ public class SinglePlayerGUI {
                     dealerCards.get(1).setIcon(Dealer.getDealerHand().get(1).imageIcon);
                     winText.setForeground(Color.RED);
                     winText.setText("You lose!");
+                    Player.chipCounter += - bet;
 
-                    if (chipCounter == 0) {
+                    if (Player.chipCounter == 0) {
 
                         winText.setText("You ran out of chips!");
                         okButton.setVisible(true);
                         hitButton.setVisible(false);
                         standButton.setVisible(false);
-                        Player.chipCounter = 100;
 
                     } else {
 
@@ -300,7 +295,7 @@ public class SinglePlayerGUI {
 
                 }
 
-                i++;
+                playerhandCounter++;
 
             }
         });
@@ -340,25 +335,21 @@ public class SinglePlayerGUI {
 
                 bet = Integer.parseInt(betInput.getText());
 
-                if (bet < 1 || bet > chipCounter) {
+                if (bet < 1 || bet > Player.chipCounter) {
 
                     betInput.setText("");
 
 
                 } else {
 
-                    chipLabel.setText(String.valueOf(chipCounter - bet));
-                    chipCounter = chipCounter - bet;
+                    chipLabel.setText(String.valueOf(Player.chipCounter - bet));
                     betInput.setText("");
 
                     betInput.setVisible(false);
                     confirmBet.setVisible(false);
                     standButton.setVisible(true);
                     hitButton.setVisible(true);
-                    dealerCards.get(0).setVisible(true);
-                    dealerCards.get(1).setVisible(true);
-                    playerCards.get(0).setVisible(true);
-                    playerCards.get(1).setVisible(true);
+
 
                 }
             }

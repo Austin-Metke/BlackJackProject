@@ -32,13 +32,13 @@ public class Player {
     }
 
     void generateHand() {
+
         playerHand.clear();
         playerHand.add(Main.cardsShuffled.get(0));
         playerHand.add(Main.cardsShuffled.get(1));
 
         playerHand.get(0).visible = true;
         playerHand.get(1).visible = true;
-
 
     }
 

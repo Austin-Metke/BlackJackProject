@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GUI {
-
+    static Color buttonColor = new Color(245, 233, 66);
     static JPanel panel = new JPanel(new BorderLayout());
     static JPanel optionsPanel = new JPanel();
     static JFrame frame;
@@ -33,6 +33,7 @@ public class GUI {
         icons.add(new ImageIcon("64.png").getImage());
 
         frame = new JFrame("Blackjack");
+
         //Sets default theme to that of the host machines Operating System and the default close operation
         UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -64,7 +65,6 @@ public class GUI {
         panel.add(jackblack);
 
         //Set color of everything
-        Color buttonColor = new Color(245, 233, 66);
         panel.setBackground(Color.GREEN.darker());
         singleplayerButton.setBackground(buttonColor);
         multiplayerButton.setBackground(buttonColor);
