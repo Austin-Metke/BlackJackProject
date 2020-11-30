@@ -1,4 +1,5 @@
 //TODO Make it not stupid
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -46,17 +47,24 @@ public class SinglePlayerGUI {
         GUI.singlePlayerPanel.setBackground(Color.GREEN.darker());
         GUI.frame.setContentPane(GUI.singlePlayerPanel);
 
-        //Hide miscellaneous items
-        playAgain.setVisible(false);
-        playAgainYes.setVisible(false);
-        playAgainNo.setVisible(false);
-        okButton.setVisible(false);
-
         for (int i = 0; i < 5; i++) {
 
             playerCards.add(new JLabel());
             dealerCards.add(new JLabel());
         }
+
+        //Hide miscellaneous items
+        playAgain.setVisible(false);
+        playAgainYes.setVisible(false);
+        playAgainNo.setVisible(false);
+        okButton.setVisible(false);
+        hitButton.setVisible(false);
+        standButton.setVisible(false);
+        playerCards.get(0).setVisible(false);
+        playerCards.get(1).setVisible(false);
+        dealerCards.get(0).setVisible(false);
+        dealerCards.get(1).setVisible(false);
+
 
         //Seems to be the only way to set a font size with custom fonts
         Font font = Font.createFont(Font.TRUETYPE_FONT, new File(".\\CasinoFlat.ttf"));
@@ -304,9 +312,7 @@ public class SinglePlayerGUI {
                 GUI.singlePlayerPanel.setVisible(false);
                 GUI.panel.setVisible(true);
                 GUI.frame.setContentPane(GUI.panel);
-                GUI.singlePlayerPanel.removeAll();
-                GUI.singlePlayerPanel.revalidate();
-                GUI.singlePlayerPanel.repaint();
+                restartPanel();
 
 
             }
@@ -347,6 +353,12 @@ public class SinglePlayerGUI {
 
                     betInput.setVisible(false);
                     confirmBet.setVisible(false);
+                    standButton.setVisible(true);
+                    hitButton.setVisible(true);
+                    dealerCards.get(0).setVisible(true);
+                    dealerCards.get(1).setVisible(true);
+                    playerCards.get(0).setVisible(true);
+                    playerCards.get(1).setVisible(true);
 
                 }
             }
@@ -360,15 +372,21 @@ public class SinglePlayerGUI {
                 GUI.singlePlayerPanel.setVisible(false);
                 GUI.panel.setVisible(true);
                 GUI.frame.setContentPane(GUI.panel);
-                GUI.singlePlayerPanel.removeAll();
-                GUI.singlePlayerPanel.revalidate();
-                GUI.singlePlayerPanel.repaint();
-
+                restartPanel();
 
             }
         });
 
 
     }
+
+    void restartPanel() {
+
+        GUI.singlePlayerPanel.removeAll();
+        GUI.singlePlayerPanel.revalidate();
+        GUI.singlePlayerPanel.repaint();
+
+    }
+
 
 }
