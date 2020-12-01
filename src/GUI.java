@@ -123,7 +123,7 @@ public class GUI {
 
 
                 try {
-                    new SinglePlayerGUI().SinglePlayerGUI();
+                    SinglePlayer.Start();
                 } catch (IOException | FontFormatException ioException) {
                     ioException.printStackTrace();
                 }

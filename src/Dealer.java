@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Dealer {
 
@@ -28,12 +29,38 @@ public class Dealer {
         return dealerHand;
     }
 
-    void generateHand() {
+
+    public static void dealerHit() {
+
+        SinglePlayer.dealerCards.get(1).setIcon(Dealer.getDealerHand().get(1).imageIcon);
+
+        Random rand = new Random();
+
+        int randidx = rand.nextInt(52);
+
+        while (true) {
+
+            if (Dealer.getDealerHandValue() < 17) {
+
+                Dealer.dealerHand.add(Main.cardsShuffled.get(randidx));
+                SinglePlayer.dealerCards.get(SinglePlayer.dealerhandCounter).setIcon(Main.cardsShuffled.get(randidx).imageIcon);
+                continue;
+            }
+
+            break;
+        }
+        SinglePlayer.dealerhandCounter++;
+
+    }
+
+    static void generateHand() {
         dealerHand.clear();
+        SinglePlayer.dealerCards.clear();
         dealerHand.add(Main.cardsShuffled.get(2));
         dealerHand.add(Main.cardsShuffled.get(3));
         dealerHand.get(0).visible = true;
         dealerHand.get(1).visible = false;
     }
+
 
 }
