@@ -15,8 +15,8 @@ class SinglePlayer {
 
     static ArrayList<JLabel> playerCards = new ArrayList<>();
     static ArrayList<JLabel> dealerCards = new ArrayList<>();
-    static int playerhandCounter = 2;
-    static int dealerhandCounter = 2;
+    static int playerhandCounter;
+    static int dealerhandCounter;
     static JButton hitButton = new JButton();
     static JButton standButton = new JButton();
     static JButton doubleDownButton = new JButton();
@@ -34,11 +34,12 @@ class SinglePlayer {
 
     public static void Start() throws IOException, FontFormatException {
 
-
+        playerhandCounter = 2;
+        dealerhandCounter = 2;
         //Shuffle deck and generate player and dealer hand
         Main.cardsShuffled = new Cards().shuffle(Main.cards);
-        Player.generateHand();
-        Dealer.generateHand();
+        Main.player.generateHand();
+        Main.dealer.generateHand();
 
         GUI.panel.setVisible(false);
         GUI.singlePlayerPanel.setLayout(null);
@@ -110,13 +111,13 @@ class SinglePlayer {
 
 
         //set Icons for player hand
-        playerCards.get(0).setIcon(Player.getPlayerHand().get(0).imageIcon);
-        playerCards.get(1).setIcon(Player.getPlayerHand().get(1).imageIcon);
+        playerCards.get(0).setIcon(Main.player.getHand().get(0).imageIcon);
+        playerCards.get(1).setIcon(Main.player.getHand().get(1).imageIcon);
 
 
         //set Icons for dealer hand
-        dealerCards.get(0).setIcon(Dealer.getDealerHand().get(0).imageIcon);
-        dealerCards.get(1).setIcon(Dealer.getDealerHand().get(1).imageIcon);
+        dealerCards.get(0).setIcon(Main.dealer.getHand().get(0).imageIcon);
+        dealerCards.get(1).setIcon(Main.dealer.getHand().get(1).imageIcon);
 
         //Add buttons to panel
         GUI.singlePlayerPanel.add(hitButton);
@@ -163,98 +164,13 @@ class SinglePlayer {
 
         chipLabel.setText(String.valueOf(Player.chipCounter));
 
-        if (!Dealer.getDealerHand().get(1).visible) {
+        if (!Main.dealer.getHand().get(1).visible) {
 
             BufferedImage cardBack = ImageIO.read(new File("Card PNGs sequential\\misc\\b1fv.png"));
             dealerCards.get(1).setIcon(new ImageIcon(cardBack));
 
         }
 
-        //Stand Button
-        standButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                Dealer.dealerHit();
-                Player.playerStand();
-            }
-
-        });
-
-        hitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                Player.playerHit();
-
-            }
-        });
-
-        playAgainNo.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                GUI.singlePlayerPanel.setVisible(false);
-                GUI.panel.setVisible(true);
-                GUI.frame.setContentPane(GUI.panel);
-                restartPanel();
-
-
-            }
-        });
-
-        playAgainYes.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                restartPanel();
-                try {
-                    SinglePlayer.Start();
-                } catch (IOException | FontFormatException ioException) {
-                    ioException.printStackTrace();
-                }
-
-            }
-        });
-
-
-        confirmBet.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                bet = Integer.parseInt(betInput.getText());
-
-                if (bet < 1 || bet > Player.chipCounter) {
-
-                    betInput.setText("");
-
-                } else {
-
-                    chipLabel.setText(String.valueOf(Player.chipCounter - bet));
-                    betInput.setText("");
-
-                    betInput.setVisible(false);
-                    confirmBet.setVisible(false);
-                    standButton.setVisible(true);
-                    hitButton.setVisible(true);
-
-
-                }
-            }
-        });
-
-
-        okButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                GUI.singlePlayerPanel.setVisible(false);
-                GUI.panel.setVisible(true);
-                GUI.frame.setContentPane(GUI.panel);
-                restartPanel();
-
-            }
-        });
 
 
     }
@@ -294,9 +210,9 @@ class SinglePlayer {
         System.out.println("You lost");
         winText.setForeground(new Color(245, 233, 66));
         winText.setText("You lose!");
-        Player.chipCounter = +-bet;
+        Player.chipCounter = Player.chipCounter - bet;
 
-        if (Player.chipCounter == 0) {
+        if (Player.chipCounter <= 0) {
 
             winText.setText("You ran out of chips!");
             okButton.setVisible(true);
@@ -315,12 +231,8 @@ class SinglePlayer {
 
     }
 
-    static void restartPanel() {
 
-        GUI.singlePlayerPanel.removeAll();
-        GUI.singlePlayerPanel.revalidate();
-        GUI.singlePlayerPanel.repaint();
 
-    }
 
 }
+

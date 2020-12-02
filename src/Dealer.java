@@ -1,11 +1,18 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Dealer {
+public class Dealer implements PlayerInterface {
 
     static ArrayList<Cards> dealerHand = new ArrayList<>();
 
-    public static int getDealerHandValue() {
+
+    @Override
+    public void bet() {
+
+    }
+
+    @Override
+    public int gethandValue() {
 
         int handValue = 0;
 
@@ -15,51 +22,55 @@ public class Dealer {
 
             handValue += g;
 
-            if (dealerHand.get(i).getValue() == 1) {
+                if (dealerHand.get(i).getValue() == 1) {
 
-                handValue = (handValue <= 21 - 10) ? handValue + 10 : handValue;
+                    handValue = (handValue <= 21 - 10) ? handValue + 10 : handValue;
 
-            }
+                }
 
         }
         return handValue;
     }
 
-    public static ArrayList<Cards> getDealerHand() {
-        return dealerHand;
+    @Override
+    public void stand() {
+
     }
 
+    @Override
+    public void hit() {
 
-    public static void dealerHit() {
-
-        SinglePlayer.dealerCards.get(1).setIcon(Dealer.getDealerHand().get(1).imageIcon);
+        SinglePlayer.dealerCards.get(1).setIcon(getHand().get(1).imageIcon);
 
         Random rand = new Random();
 
         int randidx = rand.nextInt(52);
 
-        while (true) {
+        while (gethandValue() < 17) {
 
-            if (Dealer.getDealerHandValue() < 17) {
+            Dealer.dealerHand.add(Main.cardsShuffled.get(randidx));
+            SinglePlayer.dealerCards.get(SinglePlayer.dealerhandCounter).setIcon(Main.cardsShuffled.get(randidx).imageIcon);
+            SinglePlayer.dealerhandCounter++;
 
-                Dealer.dealerHand.add(Main.cardsShuffled.get(randidx));
-                SinglePlayer.dealerCards.get(SinglePlayer.dealerhandCounter).setIcon(Main.cardsShuffled.get(randidx).imageIcon);
-                continue;
-            }
-
-            break;
         }
-        SinglePlayer.dealerhandCounter++;
+
+        System.out.println("Dealer hand value: " + gethandValue());
 
     }
 
-    static void generateHand() {
+    @Override
+    public void generateHand() {
         dealerHand.clear();
         SinglePlayer.dealerCards.clear();
         dealerHand.add(Main.cardsShuffled.get(2));
         dealerHand.add(Main.cardsShuffled.get(3));
         dealerHand.get(0).visible = true;
         dealerHand.get(1).visible = false;
+    }
+
+    @Override
+    public ArrayList<Cards> getHand() {
+        return dealerHand;
     }
 
 

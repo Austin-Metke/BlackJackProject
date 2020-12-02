@@ -1,9 +1,10 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 
 
-//TODO Set fonts and font sizes, add functionality to everything
+//TODO implement random ace toggle functionality
 public class Options {
 
 
@@ -13,7 +14,7 @@ public class Options {
     boolean Charlie;
     boolean randdelcareAce;
 
-    public static void optionsGUI() {
+    public static void optionsGUI() throws IOException, FontFormatException {
 
         //Set bounds of toggle buttons
         charlieToggle.setBounds(305, 136, 350, 60);
@@ -34,16 +35,49 @@ public class Options {
         GUI.frame.add(returnMenu);
 
 
-        returnMenu.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        charlieToggle.setText("Toggle 5 card charlie rule");
+        randaceToggle.setText("Toggle random ace");
+        returnMenu.setText("Back");
 
-                GUI.optionsPanel.setVisible(false);
-                GUI.panel.setVisible(true);
-                GUI.frame.setContentPane(GUI.panel);
+        Font font = Font.createFont(Font.TRUETYPE_FONT, new File(".\\CasinoFlat.ttf"));
+        Font buttonFont = font.deriveFont(20f);
 
-            }
-        });
+        charlieToggle.setFont(buttonFont);
+        randaceToggle.setFont(buttonFont);
+        returnMenu.setFont(buttonFont);
+
+        charlieToggle.setBackground(GUI.buttonColor);
+        charlieToggle.setBorder(GUI.border);
+        randaceToggle.setBackground(GUI.buttonColor);
+        randaceToggle.setBorder(GUI.border);
+        returnMenu.setBackground(GUI.buttonColor);
+        returnMenu.setBorder(GUI.border);
+
+
+        if (charlieToggle.isSelected()) {
+
+            charlieToggle.setForeground(Color.GREEN);
+
+
+        } else {
+
+            charlieToggle.setForeground(Color.RED);
+
+
+        }
+
+
+        if (randaceToggle.isSelected()) {
+
+            randaceToggle.setForeground(Color.GREEN);
+
+
+        } else {
+
+            randaceToggle.setForeground(Color.RED);
+
+
+        }
 
 
     }

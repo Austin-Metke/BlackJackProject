@@ -3,6 +3,8 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.io.File;
 import java.io.IOException;
 import java.security.SecureRandom;
@@ -11,6 +13,7 @@ import java.util.List;
 
 public class GUI {
     static Color buttonColor = new Color(245, 233, 66);
+    static Border border = BorderFactory.createLineBorder(new Color(245, 215, 66), 4);
     static JPanel panel = new JPanel(new BorderLayout());
     static JPanel optionsPanel = new JPanel();
     static JFrame frame;
@@ -82,7 +85,7 @@ public class GUI {
         }
 
         //set borders for buttons
-        Border border = BorderFactory.createLineBorder(new Color(245, 215, 66), 4);
+
         multiplayerButton.setBorder(border);
         settingsButton.setBorder(border);
         exitButton.setBorder(border);
@@ -117,10 +120,14 @@ public class GUI {
         cardRight.setVisible(true);
 
 
+        //*******************************************************************
+        //Main Menu Buttons
+
         singleplayerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                Player.chipCounter = 100;
 
                 try {
                     SinglePlayer.Start();
@@ -155,7 +162,11 @@ public class GUI {
                 optionsPanel.setBackground(Color.GREEN.darker());
                 frame.setContentPane(optionsPanel);
 
-                Options.optionsGUI();
+                try {
+                    Options.optionsGUI();
+                } catch (IOException | FontFormatException ioException) {
+                    ioException.printStackTrace();
+                }
 
             }
         });
@@ -171,6 +182,166 @@ public class GUI {
             }
         });
 
+
+        //*******************************************************************
+        //Single Player Buttons
+
+        //Stand Button
+        SinglePlayer.standButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                Main.dealer.hit();
+                Main.player.stand();
+            }
+
+        });
+
+        SinglePlayer.hitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                Main.player.hit();
+
+            }
+        });
+
+        SinglePlayer.playAgainNo.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                GUI.singlePlayerPanel.setVisible(false);
+                GUI.panel.setVisible(true);
+                GUI.frame.setContentPane(GUI.panel);
+                GUI.restartPanel();
+
+
+            }
+        });
+
+
+        SinglePlayer.playAgainYes.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                GUI.restartPanel();
+
+                try {
+                    SinglePlayer.Start();
+                } catch (IOException | FontFormatException ioException) {
+                    ioException.printStackTrace();
+                }
+
+            }
+        });
+
+
+        SinglePlayer.confirmBet.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                System.out.println("Actual chip value: " + Player.chipCounter);
+                SinglePlayer.bet = Integer.parseInt(SinglePlayer.betInput.getText().stripTrailing());
+
+                if (SinglePlayer.bet < 1 || SinglePlayer.bet > Player.chipCounter) {
+
+                    SinglePlayer.betInput.setText("");
+
+                } else {
+
+                    SinglePlayer.chipLabel.setText(String.valueOf(Player.chipCounter - SinglePlayer.bet));
+
+                    SinglePlayer.betInput.setVisible(false);
+                    SinglePlayer.confirmBet.setVisible(false);
+                    SinglePlayer.standButton.setVisible(true);
+                    SinglePlayer.hitButton.setVisible(true);
+
+                }
+
+            }
+
+        });
+
+
+        SinglePlayer.okButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                GUI.singlePlayerPanel.setVisible(false);
+                GUI.panel.setVisible(true);
+                GUI.frame.setContentPane(GUI.panel);
+                GUI.restartPanel();
+
+            }
+        });
+
+
+        //*******************************************************************
+        //Option Buttons
+
+        Options.returnMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                GUI.optionsPanel.setVisible(false);
+                GUI.panel.setVisible(true);
+                GUI.frame.setContentPane(GUI.panel);
+
+            }
+        });
+
+        Options.charlieToggle.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+
+                if (Options.charlieToggle.isSelected()) {
+
+                    Options.charlieToggle.setForeground(Color.GREEN);
+                    System.out.println("Selected!");
+
+                } else {
+
+                    Options.charlieToggle.setForeground(Color.RED);
+
+                    System.out.println("Not Selected!");
+                }
+            }
+        });
+
+
+        Options.randaceToggle.addItemListener(new ItemListener() {
+
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+
+                if (Options.randaceToggle.isSelected()) {
+
+                    Options.randaceToggle.setForeground(Color.GREEN);
+                    System.out.println("Selected!");
+
+                } else {
+
+                    Options.randaceToggle.setForeground(Color.RED);
+
+                    System.out.println("Not Selected!");
+                }
+
+
+            }
+        });
+
+
+
     }
 
+
+    static void restartPanel() {
+
+        singlePlayerPanel.removeAll();
+        singlePlayerPanel.revalidate();
+        singlePlayerPanel.repaint();
+
+
+    }
 }
+

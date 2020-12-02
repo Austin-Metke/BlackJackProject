@@ -1,8 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +10,8 @@ public class Main {
 
     public static ArrayList<Cards> cards = new ArrayList<>();
     public static ArrayList<Cards> cardsShuffled = new ArrayList<>();
+    public static Player player = new Player();
+    public static Dealer dealer = new Dealer();
 
     public static void main(String[] args) {
 
@@ -64,5 +64,8 @@ public class Main {
 
 
     }
+
+
+
 
 }
