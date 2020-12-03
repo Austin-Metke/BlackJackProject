@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-
+//TODO Make this not stupid
 interface PlayerInterface {
 
     void bet();
@@ -23,7 +23,7 @@ public class Player implements PlayerInterface {
     static ArrayList<Cards> playerHand = new ArrayList<>();
     static int chipCounter = 100;
 
-
+    //Maybe need this?
     @Override
     public void bet() {
 
@@ -52,6 +52,7 @@ public class Player implements PlayerInterface {
         return handValue;
     }
 
+    //Probably should put this logic elsewhere
     @Override
     public void stand() {
 
@@ -82,6 +83,7 @@ public class Player implements PlayerInterface {
 
     }
 
+    //Probably should put this elsewhere too
     @Override
     public void hit() {
 
@@ -112,6 +114,7 @@ public class Player implements PlayerInterface {
 
     }
 
+    //I should do this differently
     @Override
     public void generateHand() {
 
@@ -125,6 +128,7 @@ public class Player implements PlayerInterface {
 
     }
 
+    //Is this necessary?
     @Override
     public ArrayList<Cards> getHand() {
         return playerHand;

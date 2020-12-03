@@ -14,7 +14,7 @@ public class Options {
     boolean Charlie;
     boolean randdelcareAce;
 
-    public static void optionsGUI() throws IOException, FontFormatException {
+    public static void Start() throws IOException, FontFormatException {
 
         //Set bounds of toggle buttons
         charlieToggle.setBounds(305, 136, 350, 60);
@@ -35,8 +35,8 @@ public class Options {
         GUI.frame.add(returnMenu);
 
 
-        charlieToggle.setText("Toggle 5 card charlie rule");
-        randaceToggle.setText("Toggle random ace");
+        charlieToggle.setText("Carlie Rule Disabled");
+        randaceToggle.setText("Random Ace Disabled");
         returnMenu.setText("Back");
 
         Font font = Font.createFont(Font.TRUETYPE_FONT, new File(".\\CasinoFlat.ttf"));
@@ -52,6 +52,9 @@ public class Options {
         randaceToggle.setBorder(GUI.border);
         returnMenu.setBackground(GUI.buttonColor);
         returnMenu.setBorder(GUI.border);
+
+        charlieToggle.setForeground(Color.red);
+        randaceToggle.setForeground(Color.red);
 
 
         if (charlieToggle.isSelected()) {

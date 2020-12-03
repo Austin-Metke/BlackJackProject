@@ -89,6 +89,18 @@ class SinglePlayer {
         //Set bounds of all JLabels and JButtons
         hitButton.setBounds(380, 350, 87, 20);
         standButton.setBounds(475, 350, 87, 20);
+        winText.setBounds(420, 200, 500, 50);
+        playAgainYes.setBounds(380, 350, 87, 40);
+        playAgainNo.setBounds(475, 350, 87, 40);
+        playAgain.setBounds(410, 300, 200, 50);
+        chipLabel.setBounds(10, 405, 80, 20);
+        betInput.setBounds(50, 400, 50, 25);
+        betText.setBounds(80, 400, 30, 20);
+        confirmBet.setBounds(125, 400, 143, 25);
+        okButton.setBounds(335, 350, 250, 40);
+
+
+        //TODO
         playerCards.get(0).setBounds(400, 400, 72, 96);
         playerCards.get(1).setBounds(475, 400, 72, 96);
         playerCards.get(2).setBounds(325, 400, 72, 96);
@@ -99,15 +111,8 @@ class SinglePlayer {
         dealerCards.get(2).setBounds(325, 10, 72, 96);
         dealerCards.get(3).setBounds(550, 10, 72, 96);
         dealerCards.get(4).setBounds(625, 10, 72, 96);
-        winText.setBounds(420, 200, 500, 50);
-        playAgainYes.setBounds(380, 350, 87, 40);
-        playAgainNo.setBounds(475, 350, 87, 40);
-        playAgain.setBounds(410, 300, 200, 50);
-        chipLabel.setBounds(10, 405, 80, 20);
-        betInput.setBounds(50, 400, 50, 25);
-        betText.setBounds(80, 400, 30, 20);
-        confirmBet.setBounds(125, 400, 143, 25);
-        okButton.setBounds(335, 350, 250, 40);
+
+
 
 
         //set Icons for player hand

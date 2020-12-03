@@ -11,6 +11,7 @@ import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO find a font that doesn't swap 5 and 4
 public class GUI {
     static Color buttonColor = new Color(245, 233, 66);
     static Border border = BorderFactory.createLineBorder(new Color(245, 215, 66), 4);
@@ -51,7 +52,7 @@ public class GUI {
         mainMenuText.setBounds(375, 50, 216, 60);
         cardLeft.setBounds(88, 50, 72, 96);
         cardRight.setBounds(764, 50, 72, 96);
-        jackblack.setBounds(225, 350, 500, 214);
+        jackblack.setBounds(400, 350, 150, 168);
 
         //Sets layout to null and sets the Contentpane to the main panel
         panel.setLayout(null);
@@ -121,7 +122,7 @@ public class GUI {
 
 
         //*******************************************************************
-        //Main Menu Buttons
+                             //Main Menu Buttons
 
         singleplayerButton.addActionListener(new ActionListener() {
             @Override
@@ -142,12 +143,11 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                panel.setVisible(false);
-                multiplayerPanel.setLayout(null);
-                multiplayerPanel.setVisible(true);
-                multiplayerPanel.setBackground(Color.GREEN.darker());
-                frame.setContentPane(multiplayerPanel);
-
+                try {
+                    MultiPlayer.Start();
+                } catch (IOException | FontFormatException ioException) {
+                    ioException.printStackTrace();
+                }
 
             }
         });
@@ -163,7 +163,7 @@ public class GUI {
                 frame.setContentPane(optionsPanel);
 
                 try {
-                    Options.optionsGUI();
+                    Options.Start();
                 } catch (IOException | FontFormatException ioException) {
                     ioException.printStackTrace();
                 }
@@ -184,7 +184,7 @@ public class GUI {
 
 
         //*******************************************************************
-        //Single Player Buttons
+                               //Single Player Buttons
 
         //Stand Button
         SinglePlayer.standButton.addActionListener(new ActionListener() {
@@ -227,7 +227,7 @@ public class GUI {
                 GUI.restartPanel();
 
                 try {
-                    SinglePlayer.Start();
+                    new SinglePlayer().Start();
                 } catch (IOException | FontFormatException ioException) {
                     ioException.printStackTrace();
                 }
@@ -245,7 +245,7 @@ public class GUI {
 
                 if (SinglePlayer.bet < 1 || SinglePlayer.bet > Player.chipCounter) {
 
-                    SinglePlayer.betInput.setText("");
+                    SinglePlayer.betInput.setText("NO");
 
                 } else {
 
@@ -277,7 +277,7 @@ public class GUI {
 
 
         //*******************************************************************
-        //Option Buttons
+                               //Option Buttons
 
         Options.returnMenu.addActionListener(new ActionListener() {
             @Override
@@ -296,14 +296,14 @@ public class GUI {
 
                 if (Options.charlieToggle.isSelected()) {
 
-                    Options.charlieToggle.setForeground(Color.GREEN);
-                    System.out.println("Selected!");
+                    Options.charlieToggle.setForeground(Color.GREEN.darker());
+                    Options.charlieToggle.setText("Charlie Rule Enabled");
 
                 } else {
 
                     Options.charlieToggle.setForeground(Color.RED);
 
-                    System.out.println("Not Selected!");
+                    Options.charlieToggle.setText("Charlie Rule Disabled");
                 }
             }
         });
@@ -316,14 +316,16 @@ public class GUI {
 
                 if (Options.randaceToggle.isSelected()) {
 
-                    Options.randaceToggle.setForeground(Color.GREEN);
+                    Options.randaceToggle.setForeground(Color.GREEN.darker());
                     System.out.println("Selected!");
+
 
                 } else {
 
                     Options.randaceToggle.setForeground(Color.RED);
 
                     System.out.println("Not Selected!");
+
                 }
 
 
@@ -332,7 +334,33 @@ public class GUI {
 
 
 
+        //*******************************************************************
+                                //Multiplayer Buttons
+
+
+        MultiPlayer.returnMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                GUI.optionsPanel.setVisible(false);
+                GUI.panel.setVisible(true);
+                GUI.frame.setContentPane(GUI.panel);
+
+
+            }
+        });
+
+
     }
+
+
+
+
+
+
+
+
+
 
 
     static void restartPanel() {
