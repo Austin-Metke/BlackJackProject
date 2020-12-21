@@ -11,8 +11,8 @@ public class Options {
     static JToggleButton charlieToggle = new JToggleButton();
     static JToggleButton randaceToggle = new JToggleButton();
     static JButton returnMenu = new JButton();
-    boolean Charlie;
-    boolean randdelcareAce;
+    static boolean Charlie;
+    static boolean randdelcareAce;
 
     public static void Start() throws IOException, FontFormatException {
 
@@ -35,7 +35,7 @@ public class Options {
         GUI.frame.add(returnMenu);
 
 
-        charlieToggle.setText("Carlie Rule Disabled");
+        charlieToggle.setText("Charlie Rule Disabled");
         randaceToggle.setText("Random Ace Disabled");
         returnMenu.setText("Back");
 
@@ -57,26 +57,29 @@ public class Options {
         randaceToggle.setForeground(Color.red);
 
 
-        if (charlieToggle.isSelected()) {
-
-            charlieToggle.setForeground(Color.GREEN);
+        if (Charlie) {
+            Charlie = true;
+            Options.charlieToggle.setText("Charlie Rule Enabled");
+            charlieToggle.setForeground(Color.GREEN.darker());
 
 
         } else {
-
+            Charlie = false;
+            Options.charlieToggle.setText("Charlie Rule Disabled");
             charlieToggle.setForeground(Color.RED);
 
 
         }
 
 
-        if (randaceToggle.isSelected()) {
-
-            randaceToggle.setForeground(Color.GREEN);
-
+        if (randdelcareAce) {
+            randdelcareAce = true;
+            randaceToggle.setText("Random Ace Enabled");
+            randaceToggle.setForeground(Color.GREEN.darker());
 
         } else {
-
+            randdelcareAce = false;
+            randaceToggle.setText("Random Ace Disabled");
             randaceToggle.setForeground(Color.RED);
 
 

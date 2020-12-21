@@ -27,6 +27,8 @@ class SinglePlayer {
     static JLabel chipLabel = new JLabel();
     static JLabel playAgain = new JLabel();
     static JLabel betText = new JLabel();
+    static JLabel dealer = new JLabel();
+    static JLabel player = new JLabel();
     static JButton okButton = new JButton();
     static JTextField betInput = new JTextField();
     static int bet;
@@ -70,6 +72,8 @@ class SinglePlayer {
         confirmBet.setVisible(true);
         betInput.setVisible(true);
         winText.setVisible(false);
+        dealer.setVisible(true);
+        player.setVisible(true);
 
 
         //Seems to be the only way to set a font size with custom fonts
@@ -85,6 +89,8 @@ class SinglePlayer {
         betInput.setFont(chipFont);
         betText.setFont(chipFont);
         okButton.setFont(buttonFont);
+        dealer.setFont(chipFont);
+        player.setFont(chipFont);
 
         //Set bounds of all JLabels and JButtons
         hitButton.setBounds(380, 350, 87, 20);
@@ -98,9 +104,11 @@ class SinglePlayer {
         betText.setBounds(80, 400, 30, 20);
         confirmBet.setBounds(125, 400, 143, 25);
         okButton.setBounds(335, 350, 250, 40);
+        dealer.setBounds(440, 115, 75, 25);
+        player.setBounds(440, 375, 75, 25);
 
 
-        //TODO
+        //TODO implement algorithm to do this automatically
         playerCards.get(0).setBounds(400, 400, 72, 96);
         playerCards.get(1).setBounds(475, 400, 72, 96);
         playerCards.get(2).setBounds(325, 400, 72, 96);
@@ -111,8 +119,6 @@ class SinglePlayer {
         dealerCards.get(2).setBounds(325, 10, 72, 96);
         dealerCards.get(3).setBounds(550, 10, 72, 96);
         dealerCards.get(4).setBounds(625, 10, 72, 96);
-
-
 
 
         //set Icons for player hand
@@ -137,14 +143,16 @@ class SinglePlayer {
         GUI.singlePlayerPanel.add(betText);
         GUI.singlePlayerPanel.add(confirmBet);
         GUI.singlePlayerPanel.add(okButton);
+        GUI.singlePlayerPanel.add(dealer);
+        GUI.singlePlayerPanel.add(player);
 
         //set borders of all buttons
-        Border border = BorderFactory.createLineBorder(new Color(245, 215, 66), 4);
-        playAgainNo.setBorder(border);
-        playAgainYes.setBorder(border);
-        hitButton.setBorder(border);
-        standButton.setBorder(border);
-        confirmBet.setBorder(border);
+
+        playAgainNo.setBorder(GUI.border);
+        playAgainYes.setBorder(GUI.border);
+        hitButton.setBorder(GUI.border);
+        standButton.setBorder(GUI.border);
+        confirmBet.setBorder(GUI.border);
 
 
         //For loop to add all playerCards to panel
@@ -166,6 +174,8 @@ class SinglePlayer {
         playAgain.setText("Play Again?");
         confirmBet.setText("Confirm Bet");
         okButton.setText("Return to menu");
+        dealer.setText("Dealer");
+        player.setText("Player");
 
         chipLabel.setText(String.valueOf(Player.chipCounter));
 
@@ -176,8 +186,6 @@ class SinglePlayer {
 
         }
 
-
-
     }
 
     public static void tie() {
@@ -185,12 +193,14 @@ class SinglePlayer {
         winText.setVisible(true);
         winText.setText("It's a tie!");
         System.out.println("It's a tie!");
-        Player.chipCounter = +bet;
+        Player.chipCounter = Player.chipCounter + bet;
         hitButton.setVisible(false);
         standButton.setVisible(false);
         playAgain.setVisible(true);
         playAgainNo.setVisible(true);
         playAgainYes.setVisible(true);
+        player.setVisible(false);
+        dealer.setVisible(false);
 
     }
 
@@ -200,13 +210,14 @@ class SinglePlayer {
         System.out.println("You won");
         winText.setForeground(new Color(245, 233, 66));
         winText.setText("You won!");
-        Player.chipCounter = +bet * 2;
+        Player.chipCounter = Player.chipCounter + (bet * 2);
         playAgain.setVisible(true);
         playAgainNo.setVisible(true);
         playAgainYes.setVisible(true);
         hitButton.setVisible(false);
         standButton.setVisible(false);
-
+        player.setVisible(false);
+        dealer.setVisible(false);
     }
 
     public static void playerLost() {
@@ -215,7 +226,6 @@ class SinglePlayer {
         System.out.println("You lost");
         winText.setForeground(new Color(245, 233, 66));
         winText.setText("You lose!");
-        Player.chipCounter = Player.chipCounter - bet;
 
         if (Player.chipCounter <= 0) {
 
@@ -223,6 +233,8 @@ class SinglePlayer {
             okButton.setVisible(true);
             hitButton.setVisible(false);
             standButton.setVisible(false);
+            player.setVisible(false);
+            dealer.setVisible(false);
 
         } else {
 
@@ -231,13 +243,12 @@ class SinglePlayer {
             playAgainNo.setVisible(true);
             playAgainYes.setVisible(true);
             playAgain.setVisible(true);
+            player.setVisible(false);
+            dealer.setVisible(false);
         }
 
 
     }
-
-
-
 
 }
 

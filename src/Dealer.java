@@ -1,8 +1,11 @@
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Dealer implements PlayerInterface {
-
+    Random rand = new Random();
     static ArrayList<Cards> dealerHand = new ArrayList<>();
 
 
@@ -38,15 +41,17 @@ public class Dealer implements PlayerInterface {
     }
 
     @Override
-    public void hit() {
+    public void hit() throws IOException, UnsupportedAudioFileException, LineUnavailableException, InterruptedException {
 
         SinglePlayer.dealerCards.get(1).setIcon(getHand().get(1).imageIcon);
 
-        Random rand = new Random();
+
 
         int randidx = rand.nextInt(52);
 
         while (gethandValue() < 17) {
+
+            playSound();
 
             Dealer.dealerHand.add(Main.cardsShuffled.get(randidx));
             SinglePlayer.dealerCards.get(SinglePlayer.dealerhandCounter).setIcon(Main.cardsShuffled.get(randidx).imageIcon);
@@ -66,6 +71,23 @@ public class Dealer implements PlayerInterface {
         dealerHand.add(Main.cardsShuffled.get(3));
         dealerHand.get(0).visible = true;
         dealerHand.get(1).visible = false;
+    }
+
+    @Override
+    public void playSound() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+
+        Clip clip;
+        int randsound = rand.nextInt(4) + 1;
+        String filePath = "Sound Effects\\cardPlace" + randsound + ".wav";
+
+        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
+
+
+        clip = AudioSystem.getClip();
+        clip.open(audioInputStream);
+        clip.start();
+
+
     }
 
     @Override

@@ -19,7 +19,6 @@ public class Cards {
 
     }
 
-
     public ImageIcon getImageIcon() {
         return imageIcon;
     }

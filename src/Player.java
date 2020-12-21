@@ -1,3 +1,6 @@
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -10,9 +13,11 @@ interface PlayerInterface {
 
     void stand();
 
-    void hit();
+    void hit() throws IOException, UnsupportedAudioFileException, LineUnavailableException, InterruptedException;
 
     void generateHand();
+
+    void playSound() throws IOException, UnsupportedAudioFileException, LineUnavailableException;
 
     ArrayList<Cards> getHand();
 
@@ -22,6 +27,8 @@ public class Player implements PlayerInterface {
 
     static ArrayList<Cards> playerHand = new ArrayList<>();
     static int chipCounter = 100;
+    Random rand = new Random();
+    boolean isStanding;
 
     //Maybe need this?
     @Override
@@ -85,17 +92,27 @@ public class Player implements PlayerInterface {
 
     //Probably should put this elsewhere too
     @Override
-    public void hit() {
+    public void hit() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
 
-        Random rand = new Random();
 
+        playSound();
         int randidx = rand.nextInt(52);
+        int randsound = rand.nextInt(4) + 1;
+        Clip clip;
+        String filePath = "Sound Effects\\cardPlace" + randsound + ".wav";
+
+        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
+
+
+        clip = AudioSystem.getClip();
+        clip.open(audioInputStream);
+        clip.start();
 
         playerHand.add(Main.cardsShuffled.get(randidx));
         SinglePlayer.playerCards.get(SinglePlayer.playerhandCounter).setIcon(Main.cardsShuffled.get(randidx).imageIcon);
         SinglePlayer.playerhandCounter++;
 
-        if (Options.charlieToggle.isSelected()) {
+        if (Options.Charlie) {
 
             if (getHand().size() == 5 && gethandValue() <= 21) {
 
@@ -103,7 +120,9 @@ public class Player implements PlayerInterface {
                 SinglePlayer.playerWon();
 
             }
-        } if (gethandValue() > 21) {
+
+        }
+        if (gethandValue() > 21) {
 
             SinglePlayer.dealerCards.get(1).setIcon(Main.dealer.getHand().get(1).imageIcon);
             SinglePlayer.playerLost();
@@ -113,6 +132,23 @@ public class Player implements PlayerInterface {
         System.out.println("Player hand value: " + gethandValue());
 
     }
+
+    //Will mess with later
+    public void doubleDown() {
+
+
+    }
+
+    //Will mess with later
+    public void split() {
+
+
+
+
+
+    }
+
+
 
     //I should do this differently
     @Override
@@ -128,10 +164,28 @@ public class Player implements PlayerInterface {
 
     }
 
+    @Override
+    public void playSound() throws IOException, UnsupportedAudioFileException, LineUnavailableException {
+
+        Clip clip;
+        int randsound = rand.nextInt(4) + 1;
+        String filePath = "Sound Effects\\cardPlace" + randsound + ".wav";
+
+        AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new File(filePath).getAbsoluteFile());
+
+
+        clip = AudioSystem.getClip();
+        clip.open(audioInputStream);
+        clip.start();
+
+    }
+
     //Is this necessary?
     @Override
     public ArrayList<Cards> getHand() {
+
         return playerHand;
+
     }
 
 

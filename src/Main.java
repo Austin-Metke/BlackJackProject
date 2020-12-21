@@ -56,7 +56,9 @@ public class Main {
 
         //Thanks Jaxon
         for (int i = 0; i < cards.size(); i++) {
+
             cards.get(i).value = (i % 13 + 1 < 10) ? i % 13 + 1 : 10;
+
         }
 
         //Shuffle the cards

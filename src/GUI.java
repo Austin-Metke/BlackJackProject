@@ -1,3 +1,5 @@
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
@@ -91,7 +93,6 @@ public class GUI {
         settingsButton.setBorder(border);
         exitButton.setBorder(border);
         singleplayerButton.setBorder(border);
-
 
         //Set text and font for buttons
         Font font = Font.createFont(Font.TRUETYPE_FONT, new File(".\\CasinoFlat.ttf"));
@@ -191,7 +192,11 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                Main.dealer.hit();
+                try {
+                    Main.dealer.hit();
+                } catch (IOException | UnsupportedAudioFileException | LineUnavailableException | InterruptedException ioException) {
+                    ioException.printStackTrace();
+                }
                 Main.player.stand();
             }
 
@@ -201,7 +206,11 @@ public class GUI {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                Main.player.hit();
+                try {
+                    Main.player.hit();
+                } catch (IOException | LineUnavailableException | UnsupportedAudioFileException ioException) {
+                    ioException.printStackTrace();
+                }
 
             }
         });
@@ -227,7 +236,7 @@ public class GUI {
                 GUI.restartPanel();
 
                 try {
-                    new SinglePlayer().Start();
+                    SinglePlayer.Start();
                 } catch (IOException | FontFormatException ioException) {
                     ioException.printStackTrace();
                 }
@@ -248,8 +257,8 @@ public class GUI {
                     SinglePlayer.betInput.setText("NO");
 
                 } else {
-
-                    SinglePlayer.chipLabel.setText(String.valueOf(Player.chipCounter - SinglePlayer.bet));
+                    Player.chipCounter = Player.chipCounter - SinglePlayer.bet;
+                    SinglePlayer.chipLabel.setText(String.valueOf(Player.chipCounter));
 
                     SinglePlayer.betInput.setVisible(false);
                     SinglePlayer.confirmBet.setVisible(false);
@@ -295,18 +304,22 @@ public class GUI {
             public void itemStateChanged(ItemEvent e) {
 
                 if (Options.charlieToggle.isSelected()) {
-
+                    Options.Charlie = true;
                     Options.charlieToggle.setForeground(Color.GREEN.darker());
                     Options.charlieToggle.setText("Charlie Rule Enabled");
+                    System.out.println("Charlie Rule Enabled");
+
 
                 } else {
-
+                    Options.Charlie = false;
                     Options.charlieToggle.setForeground(Color.RED);
-
                     Options.charlieToggle.setText("Charlie Rule Disabled");
+                    System.out.println("Charlie Rule Disabled");
+
                 }
             }
         });
+
 
 
         Options.randaceToggle.addItemListener(new ItemListener() {
@@ -315,16 +328,18 @@ public class GUI {
             public void itemStateChanged(ItemEvent e) {
 
                 if (Options.randaceToggle.isSelected()) {
-
+                    Options.randdelcareAce = true;
                     Options.randaceToggle.setForeground(Color.GREEN.darker());
-                    System.out.println("Selected!");
+                    Options.randaceToggle.setText("Random Ace Enabled");
+                    System.out.println("Random Ace Enabled");
 
 
                 } else {
-
                     Options.randaceToggle.setForeground(Color.RED);
-
-                    System.out.println("Not Selected!");
+                    Options.randdelcareAce = false;
+                    System.out.println("Random Ace Disabled");
+                    System.out.println("Random Ace Enabled");
+                    Options.randaceToggle.setText("Random Ace Disabled");
 
                 }
 
@@ -352,15 +367,6 @@ public class GUI {
 
 
     }
-
-
-
-
-
-
-
-
-
 
 
     static void restartPanel() {
